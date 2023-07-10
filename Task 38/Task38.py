@@ -1,6 +1,9 @@
 # Задача 38: Дополнить телефонный справочник возможностью добавления данных.
 
 
+import csv
+
+
 def show_menu():
     print("\nВыберите необходимое действие:\n"
           "1. Отобразить весь справочник\n"
@@ -42,13 +45,8 @@ def work_with_phonebook():
             choice = show_menu()
         elif choice == 4:
             # create_new_user()
-            surname=input("Введите фамилию: ")
-            name=input("Введите имя: ")
-            phone=input("Введите телефон: ")
-            phone_book['Фамилия']=surname
-            phone_book['Имя']=name
-            phone_book['Телефон']=phone
-            print("Контакт успешно добавлен!")
+            new_data()
+            choice = show_menu()
 
 
         elif choice == 7:
@@ -79,6 +77,33 @@ def save_txt(file, phone_book1):
                 string += w + ','
             fin.write(f'{string[:-1]}\n')
 
+
+
+def create_new_user(surname='', name='', phone=''):
+            phone_book = read_csv('phonebook.csv')
+            surname=input("Введите фамилию: ")
+            name=input("Введите имя: ")
+            phone=input("Введите телефон: ")
+            # phone_book['Фамилия']=surname
+            # phone_book['Имя']=name
+            # phone_book['Телефон']=phone
+            new_row = [surname.title(), name.title(), phone]
+            phone_book.append(new_row)
+            print("Контакт успешно добавлен!")
+
+def new_data():
+    """добавляет строку в справочник"""
+    surname=input("Введите фамилию: ")
+    name=input("Введите имя: ")
+    phone=input("Введите телефон: ")
+    with open('phonebook.csv', 'a', encoding='utf-8') as file:
+        # file.write(input('Введите новую строку:'+ '\n') )
+        file.write(f"{surname},{name},{phone}\n")
+    print("Контакт успешно добавлен!")
+
+ 
+
+
 # def create_new_user(surname='', name='', phone='', email=''):
 #     surname=input("Введите фамилию: ")
 #     name=input("Введите имя: ")
@@ -100,12 +125,12 @@ def save_txt(file, phone_book1):
 #         if(row[1] == surname.title() and row[2] == name.title() and row[3] == phone and row[4] == email.lower()):
 #             print("ТАКОЙ АБОНЕНТ УЖЕ СУЩЕСТВУЕТ")
 #             return
-    # new_row = [surname.title(), name.title(), phone, email.lower()]
-    # phone_book.append(new_row)
-    # with open(filename, 'a', newline='') as csv_file:
-    #     writer = csv.writer(csv_file, delimiter=',',
-    #                         quotechar='\'', quoting=csv.QUOTE_MINIMAL)
-    #     writer.writerow(new_row)   
+#     new_row = [surname.title(), name.title(), phone, email.lower()]
+#     phone_book.append(new_row)
+#     with open(filename, 'a', newline='') as csv_file:
+#         writer = csv.writer(csv_file, delimiter=',',
+#                             quotechar='\'', quoting=csv.QUOTE_MINIMAL)
+#         writer.writerow(new_row)   
 
 work_with_phonebook()
 # show_menu()
